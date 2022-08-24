@@ -10,7 +10,11 @@ Notably, gestures for embedded UIKit `UIView`s are still processed correctly; th
 
 This issue reproduces on iOS 15 and iOS 16 Beta 6.
 
-From poking around under the hood, it appears that when this occurs the `SwiftUI.EventBindingManager` never goes into the `isActive = true` state when the touches begin, and the `SwiftUI.UIKitGestureRecognizer` does not transition to the `ended` state on `UIGestureRecognizer.touchesEnded(…)`. A mitigation for this behavior is removing and re-adding the `UIHostingController`'s view to the view hierarchy, but that causes other undesirable behavior.
+From poking around under the hood, it appears that when this occurs the `SwiftUI.EventBindingManager` never goes into the `isActive = true` state when the touches begin, and the `SwiftUI.UIKitGestureRecognizer` does not transition to the `ended` state on `UIGestureRecognizer.touchesEnded(…)`. 
+
+Some mitigations for this behavior are:
+- Slightly repositioning the `UIHostingController`'s view on `viewDidAppear` (as seen in this commit [9f75a7a](https://github.com/erichoracek/BrokenGesturesFeedback/commit/9f75a7a9bb46d74fe6b5c40d2e8249988c6c8adc))
+- Removing and re-adding the `UIHostingController`'s view to the view hierarchy, but that causes other undesirable behavior.
 
 ## Recording
 
