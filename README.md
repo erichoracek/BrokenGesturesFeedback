@@ -6,7 +6,7 @@ SwiftUI gestures break when contained in a `UIHostingController` that had a layo
 
 When a newly instantiated `UIHostingController` is animated as part of a `UIViewControllerAnimatedTransitioning` within a `UINavigationController` that has a call to `view.layoutIfNeeded()` on the `UIHostingController`'s view, SwiftUI gestures stop being processed, resulting in an unresponsive application. 
 
-Notably, gestures for embedded UIKit `UIView`s are still processed correctly; the only gestures that break are those implemented in SwiftUI, e.g. the tap gesture of a Button. There is an attached project that minimally reproduces this issue. 
+Notably, gestures for embedded UIKit `UIView`s are still processed correctly; the only gestures that break are those implemented in SwiftUI, e.g. the tap gesture of a `Button`.
 
 This issue reproduces on iOS 15 and iOS 16 Beta 6.
 
