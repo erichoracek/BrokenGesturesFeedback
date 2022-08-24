@@ -29,18 +29,47 @@ class ViewController: UINavigationController {
     }
   }
 
-  private lazy var root = UIHostingController(rootView: Step(title: "Go forward") { [weak self] in
+  private lazy var root = MyHostingController(content: Step(title: "Go forward") { [weak self] in
     self?.showDetail = true
   })
 
   private func updateViewControllers() {
     var viewControllers: [UIViewController] = [root]
     if showDetail {
-      viewControllers.append(UIHostingController(rootView: Step(title: "Go back") { [weak self] in
+      viewControllers.append(MyHostingController(content: Step(title: "Go back") { [weak self] in
         self?.showDetail = false
       }))
     }
     setViewControllers(viewControllers, animated: true)
+  }
+}
+
+final class MyHostingController<Content: View>: UIViewController {
+
+  init(content: Content) {
+    hostingController = UIHostingController(rootView: content)
+    super.init(nibName: nil, bundle: nil)
+    addChild(hostingController)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  private let hostingController: UIHostingController<Content>
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(hostingController.view)
+    hostingController.view.frame = view.bounds
+    hostingController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    hostingController.view.frame = view.bounds.offsetBy(dx: 1, dy: 0)
+    hostingController.view.frame = view.bounds
   }
 }
 
