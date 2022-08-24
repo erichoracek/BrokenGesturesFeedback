@@ -1,12 +1,12 @@
 # BrokenGesturesFeedback
 
-SwiftUI gestures break when contained in a UIHostingController that had a layout pass in a UIKit animated transition
+SwiftUI gestures break when contained in a `UIHostingController` that had a layout pass in a UIKit animated transition
 
 ## Description
 
-When a newly instantiated UIHostingController is animated as part of a UIViewControllerAnimatedTransitioning within a UINavigationController that has a call to view.layoutIfNeeded() on the UIHostingController's view, SwiftUI gestures strop being processed, resulting in an unresponsive application. 
+When a newly instantiated `UIHostingController` is animated as part of a `UIViewControllerAnimatedTransitioning` within a `UINavigationController` that has a call to `view.layoutIfNeeded()` on the `UIHostingController`'s view, SwiftUI gestures stop being processed, resulting in an unresponsive application. 
 
-Notably, gestures for embedded UIKit UIViews are still processed correctly; the only gestures that break are those implemented in SwiftUI, e.g. the tap gesture of a Button. There is an attached project that minimally reproduces this issue. 
+Notably, gestures for embedded UIKit `UIView`s are still processed correctly; the only gestures that break are those implemented in SwiftUI, e.g. the tap gesture of a Button. There is an attached project that minimally reproduces this issue. 
 
 This issue reproduces on iOS 15 and iOS 16 Beta 6.
 
@@ -15,4 +15,3 @@ From poking around under the hood, it appears that when this occurs the `SwiftUI
 ## Recording
 
 https://user-images.githubusercontent.com/438313/186284534-5a59bd13-465d-4598-90d0-3c8380fd7c27.mov
-
